@@ -6,7 +6,7 @@ const Stack = createNativeStackNavigator();
 
 const AppNavigator = () => {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator initialRouteName="intro">
       <Stack.Screen
         name="login"
         component={Screens.LoginScreen}
@@ -40,6 +40,11 @@ const AppNavigator = () => {
       <Stack.Screen
         name="change"
         component={Screens.ChangeDetailsScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="intro"
+        component={Screens.IntroScreen}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

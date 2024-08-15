@@ -1,9 +1,8 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
-import * as Screens from "../screens/index";
-import { AntDesign } from "@expo/vector-icons";
-import { Feather } from "@expo/vector-icons";
+import { StyleSheet, Text, View } from "react-native";
+import * as Screens from "../screens/index"; // Assuming this includes MainPage
+import { AntDesign, Feather, MaterialCommunityIcons } from "@expo/vector-icons";
 const Tab = createBottomTabNavigator();
 
 const BottomTab = ({ navigation }) => {
@@ -20,96 +19,33 @@ const BottomTab = ({ navigation }) => {
       }}
     >
       <Tab.Screen
-        name="contacts"
+        name="Contacts"
         component={Screens.ContactsScreen}
         options={{
-          tabBarIcon: ({ focused }) => (
-            <View
-              style={{
-                justifyContent: "center",
-                alignContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <AntDesign
-                name="contacts"
-                size={20}
-                color={focused ? "#171E4A" : "#A3A3BD"}
-              />
-              <Text
-                style={{
-                  width: 100,
-                  textAlign: "center",
-                  top: 5,
-                  color: focused ? "#171E4A" : "#A3A3BD",
-                }}
-              >
-                Contacts
-              </Text>
-            </View>
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="pill" color={color} size={size} />
           ),
+          tabBarLabel: "Medication"
         }}
       />
       <Tab.Screen
-        name="homes"
-        component={Screens.HomeScreen}
+        name="Add"
+        component={Screens.HomeScreen} // Assuming you have a screen for adding items
         options={{
-          tabBarIcon: ({ focused }) => (
-            <View
-              style={{
-                justifyContent: "center",
-                alignContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <AntDesign
-                name="home"
-                size={20}
-                color={focused ? "#171E4A" : "#A3A3BD"}
-              />
-              <Text
-                style={{
-                  width: 100,
-                  textAlign: "center",
-                  top: 5,
-                  color: focused ? "#171E4A" : "#A3A3BD",
-                }}
-              >
-                Home
-              </Text>
-            </View>
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="plus-circle" color={color} size={size} />
           ),
+          tabBarLabel: "Add"
         }}
       />
       <Tab.Screen
-        name="gps"
-        component={Screens.GpsScreen}
+        name="Schedule"
+        component={Screens.GpsScreen} // Assuming this is for a scheduling feature
         options={{
-          tabBarIcon: ({ focused }) => (
-            <View
-              style={{
-                justifyContent: "center",
-                alignContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <Feather
-                name="map-pin"
-                size={20}
-                color={focused ? "#171E4A" : "#A3A3BD"}
-              />
-              <Text
-                style={{
-                  width: 100,
-                  textAlign: "center",
-                  top: 5,
-                  color: focused ? "#171E4A" : "#A3A3BD",
-                }}
-              >
-                Locate
-              </Text>
-            </View>
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="clock-outline" color={color} size={size} />
           ),
+          tabBarLabel: "Schedule"
         }}
       />
     </Tab.Navigator>

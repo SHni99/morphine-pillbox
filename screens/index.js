@@ -8,6 +8,7 @@ import ChangeNameScreen from "./ChangeNameScreen";
 import ChangePasswordScreen from "./ChangePasswordScreen";
 import ChangeNumberScreen from "./ChangeNumberScreen";
 import ChangeDetailsScreen from "./ChangeDetailsScreen";
+import IntroScreen from "./IntroScreen";
 export {
   HomeScreen,
   LoginScreen,
@@ -19,4 +20,5 @@ export {
   ChangePasswordScreen,
   ChangeNumberScreen,
   ChangeDetailsScreen,
+  IntroScreen,
 };
