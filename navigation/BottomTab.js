@@ -40,7 +40,7 @@ const BottomTab = ({ navigation }) => {
       />
       <Tab.Screen
         name="Schedule"
-        component={Screens.GpsScreen} // Assuming this is for a scheduling feature
+        component={Screens.SettingsScreen} // Assuming this is for a scheduling feature
         options={{
           tabBarIcon: ({ size }) => (
             <MaterialCommunityIcons name="clock-outline" color="#000" size={size} />

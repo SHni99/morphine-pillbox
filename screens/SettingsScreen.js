@@ -2,6 +2,7 @@ import { AntDesign, Feather } from "@expo/vector-icons";
 import { getAuth } from "firebase/auth";
 import { doc, onSnapshot, setDoc } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
+import { MaterialCommunityIcons, FontAwesome5, Ionicons } from '@expo/vector-icons';
 import {
   Alert,
   Dimensions,
@@ -16,191 +17,109 @@ import { db } from "../firebase/firebase";
 const { width } = Dimensions.get("screen");
 
 const Settings = ({ navigation }) => {
-  const [firstName, setFirstName] = useState("");
-  const [newFirstName, setNewFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [newLastName, setNewLastName] = useState("");
-  const [email, setEmail] = useState("");
-  const [phoneNum, setPhoneNum] = useState("");
 
-  const [on, setOn] = useState("Off");
+  // const cfmNameChange = (newName) => {
+  //   const sendDB = () => {
+  //     setDoc(doc(db, "users", user.uid), {
+  //       fName: newFirstName,
+  //       lName: newLastName,
+  //     }).catch((e) => console.log(e));
+  //   };
+  //   Alert.alert("Confirm", "Are you sure you want to change your name?", [
+  //     { text: "No" },
+  //     { text: "Yes", onPress: () => sendDB() },
+  //   ]);
+  // };
 
-  const cfmNameChange = (newName) => {
-    const sendDB = () => {
-      setDoc(doc(db, "users", user.uid), {
-        fName: newFirstName,
-        lName: newLastName,
-      }).catch((e) => console.log(e));
-    };
-    Alert.alert("Confirm", "Are you sure you want to change your name?", [
-      { text: "No" },
-      { text: "Yes", onPress: () => sendDB() },
-    ]);
-  };
+  // useEffect(() => {
+  //   const fetchUserData = () => {
+  //     const usersDocRef = doc(db, "users", getAuth().currentUser.uid);
+  //     onSnapshot(usersDocRef, (doc) => {
+  //       setFirstName(doc.data().fName);
+  //       setLastName(doc.data().lName);
+  //       setEmail(doc.data().email);
+  //       setPhoneNum(doc.data().phoneNum);
+  //     });
+  //   };
+  //   fetchUserData();
+  // }, []);
 
-  useEffect(() => {
-    const fetchUserData = () => {
-      const usersDocRef = doc(db, "users", getAuth().currentUser.uid);
-      onSnapshot(usersDocRef, (doc) => {
-        setFirstName(doc.data().fName);
-        setLastName(doc.data().lName);
-        setEmail(doc.data().email);
-        setPhoneNum(doc.data().phoneNum);
-      });
-    };
-    fetchUserData();
-  }, []);
-
-  return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <KeyboardAvoidingView style={styles.container}>
-        <View style={styles.welcomecontainer}>
-          <Text style={styles.headerText}>Your Profile</Text>
-          <TouchableOpacity
-            style={styles.drawerContainer}
-            onPress={() => navigation.openDrawer()}
-          >
-            <Feather name="menu" size={24} color="black" />
-          </TouchableOpacity>
+    return (
+      <SafeAreaView style={styles.container}>
+        <View style={styles.header}>
+          <Ionicons name="ios-medical" size={28} color="red" />
+          <Text style={styles.headerTitle}>Medimate</Text>
+          <Ionicons name="ios-settings" size={28} color="black" />
         </View>
-        <View style={styles.inputs}>
-          <View style={styles.sectionContainer}>
-            <Text style={styles.titleText}>Name</Text>
-            <View style={styles.userDataContainer}>
-              <Text style={styles.userData}>
-                {firstName} {lastName}
-              </Text>
-            </View>
-
-            <TouchableOpacity
-              onPress={() =>
-                navigation.navigate("changename", {
-                  firstName: firstName,
-                  lastName: lastName,
-                })
-              }
-            >
-              <AntDesign name="right" size={20} color="black" />
-            </TouchableOpacity>
-          </View>
-          <View style={styles.sectionContainer}>
-            <Text style={styles.titleText}>Phone Number</Text>
-            <View style={styles.userDataContainer}>
-              <Text style={styles.userData}>{phoneNum}</Text>
-            </View>
-            <TouchableOpacity
-              onPress={() =>
-                navigation.navigate("changenum", { number: phoneNum })
-              }
-            >
-              <AntDesign name="right" size={20} color="black" />
-            </TouchableOpacity>
-          </View>
-          <View style={styles.sectionContainer}>
-            <Text style={styles.titleText}>Email</Text>
-            <View style={styles.emailDataContainer}>
-              <Text style={{ color: "grey" }}>{email}</Text>
-            </View>
-          </View>
-          <View style={styles.sectionContainer}>
-            <Text style={styles.titleText}>Password</Text>
-            <TouchableOpacity
-              onPress={() => navigation.navigate("changepw")}
-              style={{ alignSelf: "center" }}
-            >
-              <AntDesign name="right" size={20} color="black" />
-            </TouchableOpacity>
-          </View>
+        <View style={styles.menuItem}>
+          <FontAwesome5 name="cogs" size={20} color="gray" />
+          <Text style={styles.menuText}> General</Text>
         </View>
-      </KeyboardAvoidingView>
-    </SafeAreaView>
-  );
+        <View style={styles.menuItem}>
+          <FontAwesome5 name="key" size={20} color="gray" />
+          <Text style={styles.menuText}> Password</Text>
+        </View>
+        <View style={styles.menuItem}>
+          <FontAwesome5 name="bell" size={20} color="gray" />
+          <Text style={styles.menuText}> Notification</Text>
+        </View>
+        <View style={styles.menuItem}>
+          <FontAwesome5 name="question-circle" size={20} color="gray" />
+          <Text style={styles.menuText}> FAQ</Text>
+        </View>
+        <TouchableOpacity style={styles.logoutButton}>
+          <MaterialCommunityIcons name="logout" size={20} color="white" />
+          <Text style={styles.logoutText}>Logout</Text>
+        </TouchableOpacity>
+      </SafeAreaView>
+    )
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#bbfbfa',
   },
-  drawerContainer: {
-    // left: width - 55,
-    // bottom: 350,
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: 20,
   },
-  inputs: {
-    justifyContent: "center",
-    alignSelf: "center",
+  headerTitle: {
+    fontSize: 24,
+    color: '#000'
   },
-  welcomecontainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginLeft: 20,
-    marginRight: 20,
-    height: "8%",
+  menuItem: {
+    flexDirection: 'row',
+    padding: 15,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#ccc',
+    marginHorizontal: 20,
+    marginTop: 10,
+    marginBottom: 10,
+    borderRadius: 10
   },
-  header: {},
-  headerText: {
-    fontSize: 35,
-    fontWeight: "700",
-    color: "#43356B",
+  menuText: {
+    fontSize: 16,
+    color: 'black',
   },
-  inputContainer: {
-    backgroundColor: "#A3A3BD",
-    borderRadius: 15,
-    width: 270,
-    height: 50,
-    marginBottom: 20,
-    alignItems: "center",
-    justifyContent: "center",
+  logoutButton: {
+    flexDirection: 'row',
+    padding: 15,
+    backgroundColor: '#ec407a',
+    marginHorizontal: 20,
+    marginTop: 100,
+    borderRadius: 10,
+    justifyContent: 'center',
+    alignItems: 'center'
   },
-  sectionContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    width: width - 50,
-    paddingTop: 20,
-    paddingBottom: 10,
-    alignSelf: "center",
-  },
-  inputText: {
-    padding: 13,
-  },
-  inputHeader: {
-    paddingBottom: 5,
-    fontWeight: "400",
-  },
-  nameCfmBtn: {
-    paddingLeft: 25,
-    paddingRight: 25,
-    paddingTop: 10,
-    borderRadius: 15,
-    paddingBottom: 10,
-    justifyContent: "center",
-    alignSelf: "center",
-  },
-  changePwBtn: {
-    paddingLeft: 25,
-    paddingRight: 25,
-    paddingTop: 10,
-    borderRadius: 15,
-    paddingBottom: 10,
-    justifyContent: "center",
-    alignSelf: "center",
-  },
-  userData: {
-    // position: "absolute",
-    // paddingLeft: 220,
-    color: "#43356B",
-    paddingTop: 7,
-  },
-  userDataContainer: {
-    position: "absolute",
-    alignSelf: "center",
-    right: 40,
-  },
-  emailDataContainer: {
-    position: "absolute",
-    alignSelf: "center",
-    right: 0,
-    alignContent: "center",
-    paddingTop: 7,
-  },
+  logoutText: {
+    color: 'white',
+    marginLeft: 10,
+    fontSize: 16,
+  }
 });
+
 export default Settings;
