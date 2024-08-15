@@ -1,4 +1,3 @@
-import { Feather } from "@expo/vector-icons";
 import * as Location from "expo-location";
 import { getAuth } from "firebase/auth";
 import { onValue, ref } from "firebase/database";
@@ -52,14 +51,22 @@ const MedicationItem = ({ iconColor, medicationName, dosage }) => {
   );
 };
 
+
+
 const HomeScreen = ({ navigation }) => {
+
+  const navigateToSettings = () => {
+    navigation.navigate('settings');
+  };
 
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
         <Ionicons name="ios-medical" size={28} color="red" />
         <Text style={styles.title}>Medimate</Text>
-        <Ionicons name="ios-settings" size={28} color="black" />
+        <TouchableOpacity onPress={navigateToSettings}>
+          <Ionicons name="ios-settings" size={28} color="black" />
+        </TouchableOpacity> 
       </View>
       <ScrollView style={styles.scrollView}>
         <View style={styles.section}>
@@ -265,7 +272,7 @@ const HomeScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#bbfbfa',
+    backgroundColor: '#e0f7fa',
   },
   header: {
     flexDirection: 'row',

@@ -1,4 +1,3 @@
-import { AntDesign, Feather } from "@expo/vector-icons";
 import { getAuth } from "firebase/auth";
 import { doc, onSnapshot, setDoc } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
@@ -47,9 +46,12 @@ const Settings = ({ navigation }) => {
     return (
       <SafeAreaView style={styles.container}>
         <View style={styles.header}>
-          <Ionicons name="ios-medical" size={28} color="red" />
+        <TouchableOpacity onPress={() => navigation.goBack()}>
+          <Ionicons name="chevron-back" size={28} color="black" />
+        </TouchableOpacity>
           <Text style={styles.headerTitle}>Medimate</Text>
-          <Ionicons name="ios-settings" size={28} color="black" />
+          <Text>{"       "}</Text>
+          
         </View>
         <View style={styles.menuItem}>
           <FontAwesome5 name="cogs" size={20} color="gray" />
@@ -78,7 +80,7 @@ const Settings = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#bbfbfa',
+    backgroundColor: '#e0f7fa',
   },
   header: {
     flexDirection: 'row',

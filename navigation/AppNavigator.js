@@ -47,6 +47,11 @@ const AppNavigator = () => {
         component={Screens.IntroScreen}
         options={{ headerShown: false }}
       />
+      <Stack.Screen
+        name="settings"
+        component={Screens.SettingsScreen}
+        options={{ headerShown: false }}
+      />
     </Stack.Navigator>
   );
 };

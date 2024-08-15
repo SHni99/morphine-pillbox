@@ -1,4 +1,3 @@
-import { AntDesign } from "@expo/vector-icons";
 import { getAuth } from "firebase/auth";
 import { collection, onSnapshot, query } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
@@ -19,6 +18,7 @@ import { db } from "../firebase/firebase";
 import { MaterialCommunityIcons, Ionicons } from '@expo/vector-icons';
 import { color } from "react-native-reanimated";
 const { height, width } = Dimensions.get("screen");
+import { useNavigation } from '@react-navigation/native';
 
 
 // const BEARER_TOKEN_GEMINI = process.env.REACT_APP_GEMINI_KEY;
@@ -182,15 +182,19 @@ const ContactsScreen = () => {
 
 
   // Above is the code for germini
-  const [isModalVisible, setIsModalVisible] = useState(false);
-  const [emergencyContacts, setEmergencyContacts] = useState([]);
+  const navigation = useNavigation();
+  const navigateToSettings = () => {
+    navigation.navigate('settings');
+  };
 
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
         <Ionicons name="ios-medical" size={28} color="red" />
         <Text style={styles.headerTitle}>Medimate</Text>
-        <Ionicons name="ios-settings" size={28} color="black" />
+        <TouchableOpacity onPress={navigateToSettings}>
+          <Ionicons name="ios-settings" size={28} color="black" />
+        </TouchableOpacity> 
       </View>
       <View style={styles.titleContainer}>
         <Text style={styles.title}>My Medications</Text>
@@ -228,7 +232,7 @@ const ContactsScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#bbfbfa',
+    backgroundColor: '#e0f7fa',
   },
   header: {
     flexDirection: 'row',
