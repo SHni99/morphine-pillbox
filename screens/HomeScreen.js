@@ -7,6 +7,7 @@ import React, { useEffect, useState, useRef } from "react";
 import * as Device from 'expo-device';
 import * as Notifications from 'expo-notifications';
 import { Ionicons } from '@expo/vector-icons';
+import { SafeAreaView } from "react-native-safe-area-context";
 
 import {
   ActivityIndicator,
@@ -14,7 +15,6 @@ import {
   Image,
   ImageBackground,
   KeyboardAvoidingView,
-  SafeAreaView,
   StyleSheet,
   ScrollView,
   Text,
@@ -55,11 +55,11 @@ const MedicationItem = ({ iconColor, medicationName, dosage }) => {
 const HomeScreen = ({ navigation }) => {
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <View style={styles.header}>
         <Ionicons name="ios-medical" size={28} color="red" />
         <Text style={styles.title}>Medimate</Text>
-        <Ionicons name="ios-settings" size={28} color="grey" />
+        <Ionicons name="ios-settings" size={28} color="black" />
       </View>
       <ScrollView style={styles.scrollView}>
         <View style={styles.section}>
@@ -102,7 +102,7 @@ const HomeScreen = ({ navigation }) => {
           />
         </View>
       </ScrollView>
-    </View>
+    </SafeAreaView>
   );
   // return (
   //   <ImageBackground
@@ -265,15 +265,13 @@ const HomeScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: 50,
-    backgroundColor: '#f4f4f4',
+    backgroundColor: '#bbfbfa',
   },
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     padding: 20,
-    backgroundColor: '#fff'
   },
   title: {
     fontSize: 24,

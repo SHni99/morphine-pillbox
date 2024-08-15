@@ -9,12 +9,15 @@ import {
   Text,
   TouchableOpacity,
   View,
+  ScrollView,
 } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 import { SafeAreaView } from "react-native-safe-area-context";
 import ContactsPicker from "../components/contacts/ContactsPicker";
 import EmergencyContactItem from "../components/contacts/EmergencyContactItem";
 import { db } from "../firebase/firebase";
+import { MaterialCommunityIcons, Ionicons } from '@expo/vector-icons';
+import { color } from "react-native-reanimated";
 const { height, width } = Dimensions.get("screen");
 
 
@@ -98,6 +101,47 @@ const { height, width } = Dimensions.get("screen");
 //   }
 // }
 
+const MedicationItem = ({ iconType, medicationName, dosage, timing }) => {
+  const iconMap = {
+    triangle: 'triangle',
+    circle: 'ellipse',
+    star: 'star'
+  };
+
+  const getIconColor = (shape) => {
+    switch(shape) {
+      case 'triangle':
+        return 'red'; 
+      case 'circle':
+        return 'yellow'; 
+      case 'star':
+        return 'green';
+      default:
+        return 'black';
+    }
+  };
+  
+  return (
+    <View style={styles.medicationItem}>
+      <MaterialCommunityIcons name={iconMap[iconType]} size={30} color={getIconColor(iconType)} style={styles.icon} />
+      <View style={styles.medInfo}>
+        <Text style={styles.medName}>{medicationName}</Text>
+        <Text>{dosage}</Text>
+        <Text>{timing}</Text>
+      </View>
+      <View style={styles.actions}>
+        <TouchableOpacity>
+          <MaterialCommunityIcons name="pencil" size={24} color="black" />
+        </TouchableOpacity>
+        <TouchableOpacity>
+          <MaterialCommunityIcons name="delete" size={24} color="black" />
+        </TouchableOpacity>
+      </View>
+    </View>
+  );
+};
+
+
 const ContactsScreen = () => {
 
   // const currentUser = 1;
@@ -141,118 +185,98 @@ const ContactsScreen = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [emergencyContacts, setEmergencyContacts] = useState([]);
 
-  const toggleModal = (bool) => {
-    setIsModalVisible(bool);
-  };
-
-  useEffect(() => {
-    const getEmergencyContacts = async () => {
-      const q = query(
-        collection(db, "users", getAuth().currentUser.uid, "emergencyContacts")
-      );
-      onSnapshot(q, (querySnapshot) => {
-        const temp = [];
-        querySnapshot.forEach((doc) => {
-          temp.push(doc.data());
-        });
-        setEmergencyContacts(temp);
-      });
-    };
-    getEmergencyContacts();
-  }, [!isModalVisible]);
-
   return (
-    <View
-      style={{
-        flex: 1,
-      }}
-    >
-      <SafeAreaView
-        style={{
-          flex: 1,
-          backgroundColor: "#ffa45c",
-        }}
-      >
-        <View style={styles.header}>
-          <Text style={{ fontSize: 35, fontWeight: "700", color: "white" }}>
-            Emergency Contact
-          </Text>
-          <TouchableOpacity
-            onPress={() => toggleModal(true)}
-            style={styles.addContact}
-          >
-            <AntDesign name="adduser" size={24} color="grey" />
-          </TouchableOpacity>
-        </View>
-
-        <View
-          style={{
-            backgroundColor: "white",
-            height: "100%",
-            paddingTop: 20,
-            paddingLeft: 20,
-            paddingRight: 20,
-            paddingBottom: 20,
-            alignItems: "center",
-            display: "flex",
-            justifyContent: "center",
-          }}
-        >
-          {emergencyContacts.length > 0 ? (
-            <FlatList
-              style={{
-                width: "100%",
-                height: "100%",
-              }}
-              data={emergencyContacts}
-              renderItem={({ item, index }) => {
-                return (
-                  <EmergencyContactItem item={item} index={index} key={index} />
-                );
-              }}
-            />
-          ) : (
-            <Text
-              style={{
-                fontSize: 16,
-                color: "grey",
-                textAlign: "center",
-                width: "80%",
-              }}
-            >
-              You have not added any emergency contacts.{"\n"}Click the top
-              right icon to add an emergency contact.
-            </Text>
-          )}
-        </View>
-      </SafeAreaView>
-      <Modal
-        visible={isModalVisible}
-        animationType="slide"
-        presentationStyle="overFullScreen"
-      >
-        <ContactsPicker
-          isModalVisible={isModalVisible}
-          toggleModal={toggleModal}
-          emergencyContacts={emergencyContacts}
+    <SafeAreaView style={styles.container}>
+      <View style={styles.header}>
+        <Ionicons name="ios-medical" size={28} color="red" />
+        <Text style={styles.headerTitle}>Medimate</Text>
+        <Ionicons name="ios-settings" size={28} color="black" />
+      </View>
+      <View style={styles.titleContainer}>
+        <Text style={styles.title}>My Medications</Text>
+        <TouchableOpacity>
+          <MaterialCommunityIcons name="plus-box" size={24} color="black" />
+        </TouchableOpacity>
+      </View>
+      <ScrollView style={styles.scrollView}>
+        <MedicationItem
+          iconType="triangle"
+          medicationName="Furosemide"
+          dosage="1 tablet"
+          timing="1 Hour before or 2 hours after food       
+                  Every morning, Every night"
         />
-      </Modal>
-    </View>
+        <MedicationItem
+          iconType="circle"
+          medicationName="Acebutolol"
+          dosage="2 tablets"
+          timing="1 Hour before or 2 hours after food       
+                  Every morning, Every night"
+        />
+        <MedicationItem
+          iconType="star"
+          medicationName="Captopril"
+          dosage="1 tablet"
+          timing="1 Hour before or 2 hours after food       
+                  Every morning, Every night"
+        />
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#bbfbfa',
+  },
   header: {
-    flexDirection: "row",
-    // alignItems: "center",
-    justifyContent: "space-between",
-    marginLeft: 20,
-    marginRight: 20,
-    height: "8%",
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: 20,
   },
-  addContact: {
-    // left: 80,
-    marginTop: 10,
+  headerTitle: {
+    fontSize: 24,
+    color: '#000'
   },
+  titleContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+  },
+  title: {
+    fontSize: 20,
+    color: '#000'
+  },
+  scrollView: {
+    paddingHorizontal: 20,
+  },
+  medicationItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: 'white',
+    padding: 10,
+    marginVertical: 5,
+    borderRadius: 10,
+  },
+  medInfo: {
+    flex: 1,
+    marginLeft: 10,
+  },
+  medName: {
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  actions: {
+    flexDirection: 'row',
+  },
+  icon: {
+    width: 30,
+    height: 30,
+  }
 });
+
 export default ContactsScreen;

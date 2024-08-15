@@ -13,27 +13,27 @@ const BottomTab = ({ navigation }) => {
         headerShown: false,
         tabBarShowLabel: false,
         tabBarStyle: {
-          backgroundColor: "white",
+          backgroundColor: "#ececec",
           height: 100,
         },
       }}
     >
       <Tab.Screen
         name="Contacts"
-        component={Screens.ContactsScreen}
+        component={Screens.HomeScreen}
         options={{
-          tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="pill" color={color} size={size} />
+          tabBarIcon: ({ size }) => (
+            <MaterialCommunityIcons name="pill" color="#000" size={size} />
           ),
           tabBarLabel: "Medication"
         }}
       />
       <Tab.Screen
         name="Add"
-        component={Screens.HomeScreen} // Assuming you have a screen for adding items
+        component={Screens.ContactsScreen} // Assuming you have a screen for adding items
         options={{
-          tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="plus-circle" color={color} size={size} />
+          tabBarIcon: ({ size }) => (
+            <MaterialCommunityIcons name="plus-circle" color="#000" size={size} />
           ),
           tabBarLabel: "Add"
         }}
@@ -42,8 +42,8 @@ const BottomTab = ({ navigation }) => {
         name="Schedule"
         component={Screens.GpsScreen} // Assuming this is for a scheduling feature
         options={{
-          tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="clock-outline" color={color} size={size} />
+          tabBarIcon: ({ size }) => (
+            <MaterialCommunityIcons name="clock-outline" color="#000" size={size} />
           ),
           tabBarLabel: "Schedule"
         }}
